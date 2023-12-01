@@ -1,0 +1,61 @@
+﻿@using WebAPI.Common.Result;
+@using WebUI.ViewModels.Category;
+@model CategoryAddModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Kategori İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" asp-action="Add" asp-controller="Category">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Yeni Kategori Girişi</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="categoryname">Kategori Adını Giriniz</label>
+                                <input type="text" class="form-control" asp-for="CategoryName" id="categoryname">
+                            </div>
+                        </div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="card-action">
+                            <button class="btn btn-primary" type="submit">Kategoriyi Ekle</button>
+                            <button class="btn btn-outline-warning" asp-action="Index" asp-controller="Category">Geri Dön</button>
+                        </div> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if ((ResponseType)TempData["responseType"] == ResponseType.Success)
+{
+    <script>
+        Swal.fire({
+            title: 'Ekleme işlemi başarılı!',
+            text: @Html.Raw(Json.Serialize(TempData["responseMessage"])),
+            icon: 'success',
+            confirmButtonText: 'Tamam'
+        })
+    </script>
+}
+else if((ResponseType)TempData["responseType"] == ResponseType.Error)
+{
+    <script>
+        Swal.fire({
+            title: 'Ekleme işlemi başarısız!',
+            text: @Html.Raw(Json.Serialize(TempData["responseMessage"])),
+            icon: 'error',
+            confirmButtonText: 'Tamam'
+        })
+    </script>
+}
+
+
+
